@@ -13,4 +13,4 @@ jobs:
       - name: environment
         run: echo "environment"
       - name: print secrets and vars
-        run: echo "${{ secrets.name }} ${{ var.name }}"
+        run: echo "${{ secrets.name }} ${{ vars.name }}"
