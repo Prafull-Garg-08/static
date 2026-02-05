@@ -1,6 +1,7 @@
 name: Testing github workflow features.
 
-on: push
+on:
+  push:
 
 jobs:
   print:
