@@ -5,12 +5,32 @@ on:
 
 jobs:
   print:
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     environment: test
     steps:
       - name: print actor
-        run: echo $GITHUB_ACTOR
-      - name: environment
-        run: echo "environment"
-      - name: print secrets and vars
-        run: echo "${{ secrets.name }} ${{ vars.name }}"
+        run: echo "$GITHUB_ACTOR"
+
+      - name: set env + output + log commands
+        id: demo
+        run: |
+          # Set environment variable (recommended: env file)
+          echo "MY_ENV=hello-from-env" >> "$GITHUB_ENV"
+
+          # Set step output (recommended: output file)
+          echo "my_output=hello-from-output" >> "$GITHUB_OUTPUT"
+
+          # Add workflow commands (log annotations)
+          echo "::notice title=Info::This is a notice"
+          echo "::warning title=Warn::This is a warning"
+          echo "::error title=Fail::This is an error"
+
+          # Group logs
+          echo "::group::Grouped Logs"
+          echo "Inside group"
+          echo "::endgroup::"
+
+      - name: read env + output
+        run: |
+          echo "MY_ENV=$MY_ENV"
+          echo "my_output=${{ steps.demo.outputs.my_output }}"
